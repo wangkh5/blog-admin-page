@@ -1,21 +1,20 @@
 import VueRouter from 'vue-router'
 
-import HomeContainer from './components/HomeContainer.vue'
-import MessagesContainer from './components/MessagesContainer.vue'
-import LinksContainer from './components/LinksContainer.vue'
-import ArchivesContainer from './components/ArchivesContainer.vue'
+import ArticlesContainer from './components/ArticlesContainer.vue'
+import CategoriesContainer from './components/CategoriesContainer.vue'
+import TagsContainer from './components/TagsContainer.vue'
 import AboutContainer from './components/AboutContainer.vue'
-
+import EditorArticleContainer from './components/EditorArticleContainer.vue'
 
 // 3. 创建路由对象
 var router = new VueRouter({
   routes: [
-    { path: "/",component: HomeContainer},
-    { path: "/home",component: HomeContainer},
-    { path: "/messages",component: MessagesContainer},
-    { path: "/links",component: LinksContainer},
-    { path: "/archives",component:ArchivesContainer},
-    { path: "/about",component: AboutContainer}
+    { path: "/",component: ArticlesContainer},
+    { path: "/articles",component: ArticlesContainer},
+    { path: "/categories",component: CategoriesContainer},
+    { path: "/tags",component: TagsContainer},
+    { path: "/about",component: AboutContainer},
+    {path: "/articles/editorarticle", component: EditorArticleContainer}
   ]
 })
 
