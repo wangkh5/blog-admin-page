@@ -1,6 +1,7 @@
 <template>
   <div>
-    <el-form label-width="40px" :model="blog">
+    {{this.$route.params.id}}
+    <el-form label-width="40px">
       <el-form-item label="标题">
         <el-input placeholder="请输入文章标题" v-model="blog.title" size="medium"></el-input>
       </el-form-item>
@@ -17,7 +18,9 @@
       <el-form-item label="内容">
         <mavon-editor :boxShadow="false" :scrollStyle="true" :navigation="true" v-model="blog.content"/>
         <el-button type="primary" size="medium" @click="save">发表</el-button>
-        <el-button size="medium">取消</el-button>
+        <router-link to="/articles">
+          <el-button size="medium">取消</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
 
@@ -37,12 +40,16 @@
     },
     created() {
       this.getCategoryList();
+      this.getArticle();
     },
     methods: {
       // 新增或者修改
       save(){
-        if(this.blog.id) {
-          console.log("还未实现修改");
+        if(this.blog.id > 0) {
+          this.$http.post("blog/update",this.blog)
+          .then(result => {          
+            this.$router.push("/articles");
+          });
         }else {
           console.log(this.blog)
           this.$http.post("blog/add",this.blog)
@@ -58,6 +65,17 @@
         .then(result => {
           this.categoryList = result.body;
         });
+      },
+
+      // 修改 文章内容回显
+      getArticle() {
+        if(this.$route.params.id){
+          this.$http.get("blog/findOne?id="+this.$route.params.id)
+            .then(result => {
+              this.blog = result.body;
+              console.log(result.body)
+          });
+        }
       }
       
     }

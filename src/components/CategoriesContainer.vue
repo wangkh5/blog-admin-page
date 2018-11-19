@@ -57,12 +57,15 @@
           this.tableData = result.body;
         });
       },
+      
       formatTime(row, column, cellValue, index){
         return moment(cellValue).format("YYYY-MM-DD HH:mm");
       },
+      
       handleEdit(index, row) {
         console.log(index, row);
       },
+
       // 添加分类
       addCategory(){
         this.$http.post("category/add",this.category)

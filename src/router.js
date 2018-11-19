@@ -14,7 +14,7 @@ var router = new VueRouter({
     { path: "/categories",component: CategoriesContainer},
     { path: "/tags",component: TagsContainer},
     { path: "/about",component: AboutContainer},
-    {path: "/articles/editorarticle", component: EditorArticleContainer}
+    { path: "/articles/editorarticle", component: EditorArticleContainer, name: "EditorArticle"}
   ]
 })
 

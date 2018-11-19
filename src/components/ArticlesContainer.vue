@@ -8,7 +8,7 @@
       style="width: 100%">
       <el-table-column label="标题" prop="title">
       </el-table-column>
-      <el-table-column label="所属分类" prop="categoryId">
+      <el-table-column label="所属分类" prop="categoryId" :formatter="formatCategory">
       </el-table-column>
       <el-table-column label="创建日期" prop="createTime" :formatter="formatTime">
       </el-table-column>
@@ -22,11 +22,9 @@
             placeholder="输入文章标题搜索"/>
         </template>
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button type="danger" size="mini"  @click="handleDelete(scope.$index, scope.row)">
-            删除</el-button>
+          <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">编辑</el-button>
+          <el-button type="danger" size="mini"  
+          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -50,9 +48,11 @@
         currentPage: 1,
         pageSize: 7,
         totalRecord: 0,
+        categoryList: [],
       }
     },
     created() {
+      this.getCategoryList();
       this.findPage(this.currentPage);
     },
     methods: {
@@ -65,14 +65,36 @@
           this.totalRecord = result.body.totalRecord;
         });
       },
+      
       // 格式化时间显示
       formatTime(row, column, cellValue, index){
         return moment(cellValue).format("YYYY-MM-DD HH:mm");
       },
+      
+      // 格式化分类显示
+      formatCategory(row,column,cellValue,index){
+          console.log(this.categoryList);
+          var index = this.categoryList.findIndex(item => {
+            if (item.id == cellValue) {
+              return true;
+            }
+          });
+          return this.categoryList[index].name;
+      },
+
+      // 获取所有分类
+      getCategoryList(){
+        this.$http.get("category/findAll")
+        .then(result => {
+          this.categoryList = result.body;
+        });
+      },
+
       // 编辑
       handleEdit(index, row) {
-        console.log(index, row);
+        this.$router.push({name: 'EditorArticle',params: {id: row.id}})
       },
+
       // 删除
       handleDelete(index, row) {
         console.log(index, row);
@@ -85,6 +107,7 @@
           }
         });
       }
+
     }
     
   }
