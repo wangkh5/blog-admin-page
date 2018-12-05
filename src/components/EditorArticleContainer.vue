@@ -15,7 +15,7 @@
         </el-select>
         </el-form-item>
         <el-form-item label="标签">
-        <el-select v-model="blog.tags" multiple placeholder="请选择标签" size="medium">
+        <el-select v-model="blog.tagIdList" multiple placeholder="请选择标签" size="medium">
           <el-option
             v-for="tag in tagList"
             :key="tag.id"
@@ -54,6 +54,8 @@
       // 新增或者修改
       save(){
         if(this.blog.id > 0) {
+          // 避免后台json对象转换异常
+          this.blog.tagNameList = [];
           this.$http.post("blog/update",this.blog)
           .then(result => {          
             this.$router.push("/articles");
