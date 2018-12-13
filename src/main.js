@@ -1,6 +1,3 @@
-// 入口文件
-console.log('OK')
-
 import Vue from 'vue';
 
 import VueResource from 'vue-resource';
@@ -21,6 +18,7 @@ Vue.use(mavonEditor)
 
 // 设置请求的根路径
 Vue.http.options.root = '/';
+// Vue.http.options.root = 'http://127.0.0.1';
 // 全局设置 post 时候表单数据格式组织形式   application/x-www-form-urlencoded
 // Vue.http.options.emulateJSON = true;
 
